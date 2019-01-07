@@ -1,0 +1,46 @@
+ArrayList<Bullet> bullets;
+
+void setup() {
+  size(900, 600);
+
+  bullets = new ArrayList<Bullet>();
+}
+
+void draw() {
+
+  // background
+  imageMode(CENTER);
+  PImage gotham = loadImage("img/gotham.jpg");
+  image(gotham, width/2, height/2);
+
+  //batman
+  PImage bat = loadImage("img/bat.png");
+  image(bat, batX, batY, batH, batW);
+  
+  if (bullets.size() < bulletsOnScreen) {
+  bullets.add(new Bullet(color(255), random(height), random(50)));
+  }
+ 
+  for (int i = bullets.size()-1; i >= 0; i--) {
+    bullets.get(i).update();
+  }
+  
+
+
+  if (batY+batQ > height) {
+    batY=0;
+  }
+  if (batY-batQ < 0) {
+    batY=400;
+  }
+}
+
+void keyPressed() {
+  if (key== CODED) {
+    if (keyCode== DOWN) {
+      batY=batY+jump;
+    } else if (keyCode== UP) {
+      batY= batY-jump;
+    }
+  }
+}
